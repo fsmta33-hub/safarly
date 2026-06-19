@@ -182,6 +182,62 @@
     .step-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
     .step-body p { color: var(--gray); font-size: 14px; line-height: 1.7; }
 
+    /* ───── WAITLIST ───── */
+    .waitlist {
+      padding: 100px 24px;
+      background: var(--navy2);
+      text-align: center;
+    }
+    .waitlist h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800; margin-bottom: 12px;
+    }
+    .waitlist > p { color: var(--gray); font-size: 17px; margin-bottom: 40px; }
+    .waitlist-form {
+      display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .waitlist-form input {
+      flex: 1; min-width: 220px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      font-size: 15px;
+      font-family: 'Tajawal', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .waitlist-form input::placeholder { color: var(--gray); }
+    .waitlist-form input:focus { border-color: var(--gold); }
+    .waitlist-form button {
+      padding: 14px 28px;
+      background: var(--gold); color: var(--navy);
+      border: none; border-radius: 12px;
+      font-size: 15px; font-weight: 700;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(245,166,35,0.3);
+    }
+    .waitlist-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245,166,35,0.5); }
+    .waitlist-success {
+      display: none;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 12px;
+      padding: 16px 24px;
+      color: #4ade80;
+      font-size: 16px;
+      max-width: 480px; margin: 0 auto;
+    }
+    .waitlist-count {
+      margin-top: 20px;
+      font-size: 13px; color: var(--gray);
+    }
+    .waitlist-count span { color: var(--gold); font-weight: 700; }
+
     /* ───── CTA ───── */
     .cta {
       padding: 100px 24px;
@@ -264,6 +320,20 @@
       ✉️ تواصل معنا
     </a>
   </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <h2>كن أول من يجرّب <span style="color:var(--gold)">سفرلي</span></h2>
+  <p>سجّل إيميلك وسنخبرك فور إطلاق التطبيق على Google Play</p>
+  <form class="waitlist-form" id="wlForm" action="https://formspree.io/f/xbdenoor" method="POST">
+    <input type="email" name="email" placeholder="أدخل بريدك الإلكتروني" required />
+    <button type="submit">🔔 أبلغني عند الإطلاق</button>
+  </form>
+  <div class="waitlist-success" id="wlSuccess">
+    ✅ تم التسجيل! سنبلغك فور إطلاق سفرلي 🚀
+  </div>
+  <p class="waitlist-count">انضم <span>+</span> شخص بالفعل إلى قائمة الانتظار</p>
 </section>
 
 <!-- FEATURES -->
@@ -363,5 +433,30 @@
   <p class="footer-copy">© 2026 سفرلي. جميع الحقوق محفوظة.</p>
 </footer>
 
+<script>
+document.getElementById('wlForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button');
+  btn.textContent = '...جاري التسجيل';
+  btn.disabled = true;
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('wlSuccess').style.display = 'block';
+    } else {
+      btn.textContent = '🔔 أبلغني عند الإطلاق';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = '🔔 أبلغني عند الإطلاق';
+    btn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
