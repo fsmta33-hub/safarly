@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سفرلي | Safarly — خطط لرحلتك بسهولة</title>
+  <meta name="description" content="تطبيق سفرلي — قارن أسعار الطيران والفنادق، وتتبع ميزانية رحلتك بسهولة. قريباً على Google Play." />
+  <meta property="og:title" content="سفرلي | Safarly" />
+  <meta property="og:description" content="خطط لرحلتك بسهولة — أسعار الطيران والفنادق وتتبع الميزانية" />
+  <meta property="og:image" content="icon.png" />
+  <link rel="icon" href="icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0a1628;
+      --navy2:  #0f2044;
+      --gold:   #f5a623;
+      --gold2:  #e8941a;
+      --white:  #ffffff;
+      --gray:   #8fa3b8;
+      --light:  #f0f4f8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(10,22,40,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,166,35,0.15);
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav-logo span { font-size: 18px; font-weight: 700; color: var(--gold); }
+    .nav-email {
+      font-size: 13px; color: var(--gray);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-email:hover { color: var(--gold); }
+
+    /* ───── HERO ───── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.08) 0%, transparent 70%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 13px; color: var(--gold);
+      margin-bottom: 32px;
+      animation: fadeDown .6s ease both;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 1.6s ease infinite;
+    }
+    .hero-icon {
+      width: 120px; height: 120px; border-radius: 28px;
+      box-shadow: 0 0 60px rgba(245,166,35,0.25), 0 20px 40px rgba(0,0,0,0.4);
+      margin-bottom: 32px;
+      animation: fadeUp .7s ease .1s both;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 68px);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: 20px;
+      animation: fadeUp .7s ease .2s both;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--gray); max-width: 560px;
+      line-height: 1.7; margin-bottom: 44px;
+      animation: fadeUp .7s ease .3s both;
+    }
+    .btn-group {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .7s ease .4s both;
+    }
+    .btn-primary {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--gold); color: var(--navy);
+      padding: 14px 30px; border-radius: 12px;
+      font-size: 16px; font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(245,166,35,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,166,35,0.5); }
+    .btn-primary svg { width: 22px; height: 22px; }
+    .btn-secondary {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      padding: 14px 30px; border-radius: 12px;
+      font-size: 16px; font-weight: 600;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+    /* ───── FEATURES ───── */
+    .features {
+      padding: 100px 24px;
+      background: var(--navy2);
+    }
+    .section-title {
+      text-align: center; margin-bottom: 60px;
+    }
+    .section-title h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; margin-bottom: 12px;
+    }
+    .section-title p { color: var(--gray); font-size: 16px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; max-width: 1000px; margin: 0 auto;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 32px 24px;
+      transition: transform .2s, border-color .2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245,166,35,0.3);
+    }
+    .feature-icon {
+      font-size: 40px; margin-bottom: 16px; display: block;
+    }
+    .feature-card h3 {
+      font-size: 18px; font-weight: 700; margin-bottom: 10px;
+    }
+    .feature-card p { color: var(--gray); font-size: 14px; line-height: 1.7; }
+
+    /* ───── HOW IT WORKS ───── */
+    .how {
+      padding: 100px 24px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .steps { display: flex; flex-direction: column; gap: 32px; margin-top: 48px; }
+    .step {
+      display: flex; align-items: flex-start; gap: 20px;
+    }
+    .step-num {
+      min-width: 48px; height: 48px; border-radius: 50%;
+      background: var(--gold); color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800;
+    }
+    .step-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .step-body p { color: var(--gray); font-size: 14px; line-height: 1.7; }
+
+    /* ───── CTA ───── */
+    .cta {
+      padding: 100px 24px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245,166,35,0.1) 0%, transparent 70%);
+      text-align: center;
+    }
+    .cta h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800; margin-bottom: 16px;
+    }
+    .cta p { color: var(--gray); font-size: 17px; margin-bottom: 40px; }
+
+    /* ───── FOOTER ───── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 32px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    footer .logo { display: flex; align-items: center; gap: 10px; }
+    footer .logo img { width: 30px; border-radius: 6px; }
+    footer .logo span { color: var(--gold); font-weight: 700; }
+    footer nav a {
+      color: var(--gray); font-size: 14px;
+      text-decoration: none; margin-right: 20px;
+      transition: color .2s;
+    }
+    footer nav a:hover { color: var(--white); }
+    .footer-copy { color: var(--gray); font-size: 13px; }
+
+    /* ───── ANIMATIONS ───── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.3); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 12px 16px; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="icon.png" alt="سفرلي" />
+    <span>سفرلي | Safarly</span>
+  </div>
+  <a class="nav-email" href="mailto:fsmta33@gmail.com">تواصل معنا</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    قريباً على Google Play
+  </div>
+  <img class="hero-icon" src="icon.png" alt="أيقونة سفرلي" />
+  <h1>خطط لرحلتك<br/><span>بسهولة تامة</span></h1>
+  <p>قارن أسعار الطيران والفنادق من أكبر المنصات العالمية، وتتبع ميزانية رحلتك — كل هذا في تطبيق واحد يعمل بالكامل بالعربية.</p>
+  <div class="btn-group">
+    <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.safarly.app" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.97.07l11.56-6.67-2.45-2.45L3.18 23.76zm-1.62-20.3C1.21 3.8 1 4.2 1 4.68v14.64c0 .48.21.88.56 1.22l.07.06 8.2-8.2v-.2L1.56 3.4l-.07.06zM20.4 10.4l-2.32-1.34-2.72 2.72 2.72 2.72 2.34-1.35c.67-.39.67-1.36-.02-1.75zM4.15.24L15.71 6.9l-2.45 2.45L3.18.31a1.1 1.1 0 01.97-.07z"/></svg>
+      حمّل على Google Play
+    </a>
+    <a class="btn-secondary" href="mailto:fsmta33@gmail.com">
+      ✉️ تواصل معنا
+    </a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-title">
+    <h2>لماذا <span style="color:var(--gold)">سفرلي؟</span></h2>
+    <p>كل ما تحتاجه لتخطيط رحلة مثالية في مكان واحد</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">✈️</span>
+      <h3>مقارنة أسعار الطيران</h3>
+      <p>ابحث وقارن أسعار الرحلات من Skyscanner والمسافر وغيرها — كل النتائج في شاشة واحدة.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏨</span>
+      <h3>البحث عن الفنادق</h3>
+      <p>تصفح الفنادق عبر Agoda وBooking.com واختر ما يناسب ميزانيتك وتفضيلاتك.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💰</span>
+      <h3>تتبع الميزانية</h3>
+      <p>حدد ميزانية رحلتك وتابع مصاريفك لحظة بلحظة — لا مفاجآت في نهاية الرحلة.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔔</span>
+      <h3>تذكيرات ذكية</h3>
+      <p>لا تنسَ موعد إقلاعك أو انتهاء صلاحية حجزك — التطبيق يذكرك في الوقت المناسب.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <h3>عربي بالكامل</h3>
+      <p>واجهة مصممة خصيصاً للمستخدم العربي — سهلة وسريعة وبدون تعقيد.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <h3>خصوصيتك محفوظة</h3>
+      <p>لا حاجة لإنشاء حساب — كل بياناتك تُحفظ محلياً على جهازك فقط.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-title">
+    <h2>كيف يعمل <span style="color:var(--gold)">سفرلي؟</span></h2>
+    <p>ثلاث خطوات بسيطة لتخطيط رحلتك</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>أدخل وجهتك وتاريخ السفر</h3>
+        <p>اختر المطار والوجهة وعدد المسافرين — سواء سفر داخلي أو دولي.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>قارن الأسعار واختر الأفضل</h3>
+        <p>يعرض لك التطبيق روابط مباشرة لأفضل الأسعار من أكبر منصات الحجز العالمية.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>تتبع ميزانيتك طوال الرحلة</h3>
+        <p>سجّل مصاريفك أولاً بأول وابقَ في حدود الميزانية التي حددتها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>جاهز لتخطيط رحلتك <span style="color:var(--gold)">القادمة؟</span></h2>
+  <p>حمّل سفرلي الآن وابدأ تجربة سفر مختلفة</p>
+  <div class="btn-group" style="justify-content:center">
+    <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.safarly.app" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M3.18 23.76c.3.17.65.19.97.07l11.56-6.67-2.45-2.45L3.18 23.76zm-1.62-20.3C1.21 3.8 1 4.2 1 4.68v14.64c0 .48.21.88.56 1.22l.07.06 8.2-8.2v-.2L1.56 3.4l-.07.06zM20.4 10.4l-2.32-1.34-2.72 2.72 2.72 2.72 2.34-1.35c.67-.39.67-1.36-.02-1.75zM4.15.24L15.71 6.9l-2.45 2.45L3.18.31a1.1 1.1 0 01.97-.07z"/></svg>
+      حمّل على Google Play
+    </a>
+    <a class="btn-secondary" href="mailto:fsmta33@gmail.com">✉️ fsmta33@gmail.com</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">
+    <img src="icon.png" alt="سفرلي" />
+    <span>سفرلي | Safarly</span>
+  </div>
+  <nav>
+    <a href="privacy.html">سياسة الخصوصية</a>
+    <a href="mailto:fsmta33@gmail.com">تواصل معنا</a>
+  </nav>
+  <p class="footer-copy">© 2026 سفرلي. جميع الحقوق محفوظة.</p>
+</footer>
+
+</body>
+</html>
